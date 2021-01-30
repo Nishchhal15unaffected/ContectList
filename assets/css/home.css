@@ -1,0 +1,27 @@
+body{
+	
+}
+*{
+	text-align: center;
+	margin:0;
+	padding: 0;
+}
+ul{
+	 list-style-type: none;
+}
+
+#product-name{
+	color:#ccc;
+}
+#contect-list-item{
+	width: 300px;
+	background-color: blue;
+	color: white;
+	padding:10px;
+	border:1px solid white;
+}
+#contects{
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+}

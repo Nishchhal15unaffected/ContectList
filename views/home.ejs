@@ -1,0 +1,32 @@
+<html>
+<head>
+	<title>
+	<%=title%>
+	</title>
+	<link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+	<h2 id="product-name">Contect List</h2>
+	<div id="contects">
+	<ul>
+	<% for(let i of contact_list){%>
+		<div id="contect-list-item">
+	<li> 
+	<div>
+	<%=i.name%></div>
+	<div>
+	<%=i.number%></div>
+	</li>
+	</div>
+	<div><a href="/delete-contect?number=<%=i.number%>">close</a>	</div>
+	<%}%>
+	</ul>
+	</div>
+	<form action="/contect-list" method="post">
+		<input type="text" name="name" placeholder="type your name">
+		<input type="number" name="mobile" placeholder="type your mobile number">
+		<input type="submit" value="submit">
+	</form>
+	<script src="/js/home.js"></script>
+</body>
+</html>
