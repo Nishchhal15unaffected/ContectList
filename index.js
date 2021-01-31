@@ -1,6 +1,8 @@
 const express=require('express');
 const port=8000;
 const path =require('path');
+const db=require('./config/mongoose.js');
+const Contact=require('./models/contact.js');
 const app=express();
 app.use(express.urlencoded());
 app.use(express.static('assets'));
@@ -21,28 +23,46 @@ const contactList=[
 app.set('view engine', 'ejs');
 app.set('views',path.join(__dirname,'views'));
 app.get('/',function(req,res){
-	return res.render('home', {title:'Bro I am NIsh',
-		contact_list:contactList
-
-});
+	Contact.find({},function(err,contact){
+		if(err){
+			console.log(err);
+		}
+		return res.render('home',
+	 {
+	 	title:'Bro I am NIsh',
+		contact_list:contact
+	});
+	})
+	
 });
 app.get('/practice',function(req,res){
 	return res.render('practice',{title:'practice bro practice'})
 })
 app.post('/contect-list',function(req,res){
-	contactList.push({
+	Contact2=new Contact({
 		name:req.body.name,
 		number:req.body.mobile
-	});	
-	return res.redirect('/');	
+	})
+	Contact2.save().then(()=>{
+	console.log(Contact2);
+}).catch((e)=>{
+	console.log("Error",e);
+})
+		console.log(Contact);
+
+	return res.redirect('back');
+		
 })
 app.get('/delete-contect',function(req,res){
-	const number=req.query.number;
-	const numberIndex=contactList.findIndex(contact=> contact.number==number);
-	if(numberIndex!=-1){
-		contactList.splice(numberIndex,1);
-	}
-	return res.redirect('back');
+	let id=req.query.id;
+	Contact.findByIdAndDelete(id,function(err){
+		if(err){
+			console.log("error in deleting");
+			return;
+		}
+		return res.redirect('back');
+	})
+	// return res.redirect('back');
 })
 app.listen(port,function(err){
 	if(err){
